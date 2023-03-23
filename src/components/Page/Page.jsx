@@ -6,13 +6,14 @@ import Loader from '../Loader/Loader';
 import Forecast from '../forecast/forecast';
 
 import styles from './Page.module.css';
+import { debounce } from 'lodash';
 
 function Page() {
     const { isError, isLoading, forecast, submitRequest } = useForecast();
 
-    const handleOnSearchChange = (searchData) => {
+    const handleOnSearchChange = debounce((searchData) => {
         submitRequest(searchData);
-    };
+    }, 500);
 
     return (
         <Fragment>

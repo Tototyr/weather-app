@@ -17,7 +17,7 @@ export const useForecast = () => {
     const getWoeid = async (searchData) => {
         try {
             const { data } = await axios(
-                `${api.url}/forecast.json?key=${api.key}&q=${searchData}&days=6&aqi=no&alerts=no&lang=ru`
+                `${api.url}/forecast.json?key=${api.key}&q=${searchData}&days=5&aqi=no&alerts=no&lang=ru`
             );
             return data;
         } catch (error) {
