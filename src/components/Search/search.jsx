@@ -1,22 +1,11 @@
 import React, { useState } from 'react';
 import styles from './Form.module.css';
+import useSearch from '../hook/useSearch';
+import useCities from '../hook/useCities';
 
 const Search = ({ onSearchChange }) => {
-    const [search, setSearch] = useState('');
-    const [prompts, setPrompts] = useState([]);
-    const [showprompts, setShowPromts] = useState(false);
-
-    const handleOnChange = (e) => {
-        const value = e.target.value;
-        setSearch(value);
-
-        fetch(
-            `https://autocomplete.travelpayouts.com/places2?locale=ru&types[]=airport&types[]=city&term=${value}`
-        )
-            .then((response) => response.json())
-            .then((data) => setPrompts(data.slice(0, 4)))
-            .catch((error) => console.log(error));
-    };
+    const [search, handleSearchChange, setSearch] = useSearch();
+    const { prompts, setPrompts } = useCities(search);
 
     const handlePromptsClick = (value) => {
         setSearch(value);
@@ -30,10 +19,8 @@ const Search = ({ onSearchChange }) => {
                 aria-label="search"
                 required
                 value={search}
-                onChange={handleOnChange}
+                onChange={handleSearchChange}
                 className={`${styles.input} form-control`}
-                onFocus={() => setShowPromts(true)}
-                onBlur={() => setShowPromts(false)}
             />
             {prompts.length > 0 && (
                 <ul className={styles.list}>
